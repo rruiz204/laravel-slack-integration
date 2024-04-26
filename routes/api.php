@@ -10,3 +10,4 @@ use App\Http\Controllers\GutsController;
 
 
 Route::post('/guts', [GutsController::class, 'send']);
+Route::get('/slack/oauth/callback', [GutsController::class, 'auth']);
