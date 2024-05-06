@@ -18,26 +18,9 @@ class GutsController extends Controller
         $notification = new GutsNotification($message);
         Notification::route('slack', '#laravel-integration')->notify($notification);
 
-        $tokens = WorkspaceToken::all();
-        Log::info($tokens);
-        $http = new Client();
+        Log::info('The message is: ' . $message);
 
-        foreach ($tokens as $token) {
-            $response = $http->post('https://slack.com/api/chat.postMessage', [
-                'headers' => [
-                    'Authorization' => 'Bearer ' . $token->access_token,
-                    'Content-Type' => 'application/json'
-                ],
-                'json' => [
-                    'channel' => $token->channel_id,
-                    'text' => $message
-                ]
-            ]);
-
-            $status_code = $response->getStatusCode();
-        }
-
-        return response()->json(['message' => 'Success bro!'], $status_code);
+        return response()->json(['message' => 'Success bro!'], 200);
     }
 
     public function auth(Request $request)
